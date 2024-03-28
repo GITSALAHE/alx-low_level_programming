@@ -1,37 +1,30 @@
+int _find_sqrt(int prev, int find);
 /**
- * _strstr - locates a substring
+ * _sqrt_recursion - finds square root of n, recursively
  *
- * @haystack: string to search
- * @needle: substring to find
+ * @n: int to find sqroot from
  *
- * Return: pointer to start of needle
- * in haystack
+ * Return: sqroot, -1 if no natural sqroot for n
  */
-char *_strstr(char *haystack, char *needle)
+int _sqrt_recursion(int n)
 {
-	char *occurance, *tempNeedle;
-
-	if (!*needle) /* empty needle */
-		return (haystack);
-	while (*haystack)
-	{
-		if (*haystack == *needle) /* first ch match */
-		{
-			occurance = haystack;
-			tempNeedle = needle;
-			while (*tempNeedle) /* check if match */
-			{
-				if (*haystack++ != *tempNeedle++)
-				{ /* not a match, reset pointer to first occurance */
-					haystack = occurance;
-					break;
-				}
-			}
-			if (occurance != haystack) /* didn't reset, found match */
-				return (occurance);
-		}
-		haystack++;
-	}
-	return (0); /* didn't find match */
+	if (n <= 0) /* error case */
+		return (-1);
+	return (_find_sqrt(1, n));
 }
-
+/**
+ * _find_sqrt - finds square root recursively, needs prev param
+ *
+ * @prev: previous result of function
+ * @find: constant int to find sq root for
+ *
+ * Return: square root of find, or -1 if not found
+ */
+int _find_sqrt(int prev, int find)
+{
+	if (prev > find) /* didn't find a nr, there was remainder */
+		return (-1);
+	if (prev * prev == find) /* natural root found */
+		return (prev);
+	return (_find_sqrt(prev + 1, find)); /* not super efficient */
+}
